@@ -1,29 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import makeStyles from "./styles";
 
-import { createPost } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/posts";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
+    const post = useSelector((state) =>
+        currentId ? state.posts.find((p) => p._id === currentId) : null
+    );
     const [postData, setPostData] = useState({
         creator: "",
         title: "",
         message: "",
         selectedFile: "",
+        tags: "",
     });
     const classes = makeStyles();
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (post) setPostData(post);
+    }, [post]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createPost(postData));
+
+        if (currentId) {
+            dispatch(updatePost(currentId, postData));
+        } else {
+            dispatch(createPost(postData));
+        }
+        clear();
     };
 
-    const clear = (params) => {};
+    const clear = () => {
+        setCurrentId(null);
+        setPostData({
+            creator: "",
+            title: "",
+            message: "",
+            selectedFile: "",
+            tags: "",
+        });
+    };
 
     return (
         <Paper className={classes.paper}>
@@ -33,7 +56,9 @@ const Form = () => {
                 className={`${classes.form} ${classes.root}`}
                 onSubmit={handleSubmit}
             >
-                <Typography variant="h6">Creating a memory</Typography>
+                <Typography variant="h6">
+                    {!currentId ? "Creating" : "Editing"} a memory
+                </Typography>
                 <TextField
                     name="creator"
                     variant="outlined"
@@ -74,6 +99,16 @@ const Form = () => {
                         setPostData({ ...postData, tags: e.target.value })
                     }
                 />
+                {/* <TextField
+                    name="tags"
+                    variant="outlined"
+                    label="Tags"
+                    fullWidth
+                    value={postData.tags}
+                    onChange={(e) =>
+                        setPostData({ ...postData, tags: e.target.value })
+                    }
+                /> */}
                 <div className={classes.fileInput}>
                     <FileBase
                         type="file"
