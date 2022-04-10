@@ -8,6 +8,9 @@ import {
     Container,
 } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import Icon from "./icon";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import makeStyles from "./styles";
@@ -19,6 +22,9 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignUp] = useState(false);
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const handleShowPassword = () =>
         setShowPassword((prevShowPassword) => !prevShowPassword);
 
@@ -29,8 +35,16 @@ const Auth = () => {
         handleShowPassword(false);
     };
 
-    const googleSuccess = (res) => {
-        console.log(res);
+    const googleSuccess = async (res) => {
+        const result = res?.profileObj;
+        const token = res?.tokenId;
+
+        try {
+            dispatch({ type: "AUTH", data: { result, token } });
+            history.push("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
     const googleFailure = (error) => {
         console.log("Google Sign in unsuccessful. Try again later");
