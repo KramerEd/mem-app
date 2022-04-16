@@ -40,10 +40,6 @@ const Home = () => {
 	};
 	const handleAdd = (tag) => setTags([...tags, tag]);
 
-	useEffect(() => {
-		dispatch(getPosts());
-	}, [currentId, dispatch]);
-
 	const searchPost = () => {
 		if (search.trim() || tags) {
 			dispatch(getPostBySearch({ search, tags: tags.join(",") }));
@@ -114,9 +110,14 @@ const Home = () => {
 							currentId={currentId}
 							setCurrentId={setCurrentId}
 						/>
-						<Paper className={classes.pagination} elevation={6}>
-							<Paginate />
-						</Paper>
+						{!searchQuery && !tags.length && (
+							<Paper className={classes.pagination} elevation={6}>
+								<Paginate
+									page={page}
+									className={classes.pagination}
+								/>
+							</Paper>
+						)}
 					</Grid>
 				</Grid>
 			</Container>
