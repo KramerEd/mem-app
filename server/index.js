@@ -5,8 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import postRoutes from "./routes/posts.js";
-import userRoutes from "./routes/posts.js";
-
+import userRoutes from "./routes/users.js";
 
 const app = express();
 dotenv.config();
@@ -23,10 +22,10 @@ const PORT = process.env.PORT || 5000;
 console.log(process.env.CONNECTION_URL);
 
 mongoose
-    .connect(process.env.CONNECTION_URL)
-    .then(() =>
-        app.listen(PORT, () =>
-            console.log(`Server Running on Port: http://localhost:${PORT}`)
-        )
-    )
-    .catch((error) => console.log(`${error} did not connect`));
+	.connect(process.env.CONNECTION_URL)
+	.then(() =>
+		app.listen(PORT, () =>
+			console.log(`Server Running on Port: http://localhost:${PORT}`)
+		)
+	)
+	.catch((error) => console.log(`${error} did not connect`));
