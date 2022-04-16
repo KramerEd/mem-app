@@ -45,13 +45,22 @@ const Home = () => {
 	}, [currentId, dispatch]);
 
 	const searchPost = () => {
-		if (search.trim()) {
-			dispatch(getPostBySearch({search, tags: tags.join(',')}))
+		if (search.trim() || tags) {
+			dispatch(getPostBySearch({ search, tags: tags.join(",") }));
+			history.push(
+				`/posts/search?searchQuery=${search || "none"}&tags=${tags.join(
+					","
+				)}`
+			);
 		} else {
 			history.push("/");
 		}
 	};
-	const handleKeyPress = (e) => {};
+	const handleKeyPress = (e) => {
+		if (e.keyCode === 13) {
+			searchPost();
+		}
+	};
 	return (
 		<Grow in>
 			<Container maxWidth="xl">
@@ -76,7 +85,9 @@ const Home = () => {
 								variant="outlined"
 								label="Search memories"
 								fullWidth
-								onKeyPress={handleKeyPress}
+								onKeyDown={(e) => {
+									handleKeyPress(e);
+								}}
 								value={search}
 								onChange={(e) => {
 									setSearch(e.target.value);

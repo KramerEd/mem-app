@@ -1,5 +1,6 @@
 import {
 	FETCH_ALL,
+	FETCH_BY_SEARCH,
 	CREATE,
 	UPDATE,
 	DELETE,
@@ -19,8 +20,10 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPostBySearch = (searchQuery) => async (dispatch) => {
 	try {
-		const { data } = await api.fetchPostsBySearch(searchQuery);
-		console.log(data);
+		const {
+			data: { data },
+		} = await api.fetchPostsBySearch(searchQuery);
+		dispatch({ type: FETCH_BY_SEARCH, payload: data });
 	} catch (error) {
 		console.log(error);
 	}
