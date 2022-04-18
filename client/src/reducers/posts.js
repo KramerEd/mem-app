@@ -6,13 +6,16 @@ import {
 	START_LOADING,
 	END_LOADING,
 	FETCH_BY_SEARCH,
+	FETCH_POST,
 } from "../constants/actionTypes";
 export default (state = { isLoading: true, posts: [] }, action) => {
 	switch (action.type) {
 		case START_LOADING:
 			return { ...state, isLoading: true };
+			
 		case END_LOADING:
 			return { ...state, isLoading: false };
+
 		case FETCH_ALL:
 			return {
 				...state,
@@ -22,6 +25,7 @@ export default (state = { isLoading: true, posts: [] }, action) => {
 			};
 		case CREATE:
 			return { ...state, posts: [...state, action.payload] };
+
 		case UPDATE:
 			return {
 				...state,
@@ -31,6 +35,10 @@ export default (state = { isLoading: true, posts: [] }, action) => {
 			};
 		case FETCH_BY_SEARCH:
 			return { ...state, posts: action.payload };
+
+		case FETCH_POST:
+			return { ...state, post: action.payload };
+
 		case DELETE:
 			return {
 				...state,

@@ -23,7 +23,6 @@ const App = () => {
 					<Route path="/posts" exact component={Home} />
 					<Route path="/posts/search" exact component={Home} />
 					<Route path="/posts/:id" exact component={PostDetails} />
-
 					<Route
 						path="/auth"
 						exact
