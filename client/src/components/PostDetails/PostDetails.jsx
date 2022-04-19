@@ -12,6 +12,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { getPost, getPostBySearch } from "../../actions/posts";
 
 import makeStyles from "./styles";
+import CommentSection from "./CommentSection";
 
 const PostDetails = () => {
 	const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -38,11 +39,7 @@ const PostDetails = () => {
 	if (!post) return null;
 
 	if (isLoading) {
-		return (
-			<Paper elevation={6} className={classes.loadingPaper}>
-				<CircularProgress size="7em" />
-			</Paper>
-		);
+		return <CircularProgress size="7em" />;
 	}
 
 	const recommendedPosts = posts.filter(({ _id }) => _id !== post.id);
@@ -81,7 +78,7 @@ const PostDetails = () => {
 					</Typography>
 					<Divider style={{ margin: "20px 0" }} />
 					<Typography variant="body1">
-						<strong>Comments - coming soon!</strong>
+						<CommentSection post={post} />
 					</Typography>
 					<Divider style={{ margin: "20px 0" }} />
 				</div>
@@ -92,6 +89,7 @@ const PostDetails = () => {
 							post.selectedFile ||
 							"https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
 						}
+						
 						alt={post.title}
 					/>
 				</div>

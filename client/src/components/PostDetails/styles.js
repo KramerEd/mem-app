@@ -12,16 +12,16 @@ export default makeStyles((theme) => ({
 		width: "100%",
 		[theme.breakpoints.down("sm")]: {
 			flexWrap: "wrap",
-			flexDirection: "column",
+			flexDirection: "column-reverse",
 		},
 	},
 	section: {
 		borderRadius: "20px",
 		margin: "10px",
-		flex: 1,
+		flex: "1 1 20%",
 	},
 	imageSection: {
-		marginLeft: "20px",
+		flex: "1 1 60%",
 		[theme.breakpoints.down("sm")]: {
 			marginLeft: 0,
 		},
@@ -48,5 +48,17 @@ export default makeStyles((theme) => ({
 		height: "200px",
 		overflowY: "auto",
 		marginRight: "30px",
+	},
+	"@global": {
+		"*::-webkit-scrollbar": {
+			width: "0.4em",
+		},
+		"*::-webkit-scrollbar-track": {
+			"-webkit-box-shadow": "inset 0 0 6px rgba(0,0,0,0.00)",
+		},
+		"*::-webkit-scrollbar-thumb": {
+			backgroundColor: "rgba(0,0,0,.6)",
+			borderRadius: "50px",
+		},
 	},
 }));
