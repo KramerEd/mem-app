@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-	Paper,
-	Typography,
-	CircularProgress,
-	Divider,
-} from "@material-ui/core";
+import { Typography, CircularProgress, Divider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useHistory } from "react-router-dom";
@@ -16,7 +11,6 @@ import CommentSection from "./CommentSection";
 
 const PostDetails = () => {
 	const { post, posts, isLoading } = useSelector((state) => state.posts);
-	console.log(posts);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -74,10 +68,6 @@ const PostDetails = () => {
 					</Typography>
 					<Divider style={{ margin: "20px 0" }} />
 					<Typography variant="body1">
-						<strong>Realtime Chat - coming soon!</strong>
-					</Typography>
-					<Divider style={{ margin: "20px 0" }} />
-					<Typography variant="body1">
 						<CommentSection post={post} />
 					</Typography>
 					<Divider style={{ margin: "20px 0" }} />
@@ -89,7 +79,6 @@ const PostDetails = () => {
 							post.selectedFile ||
 							"https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
 						}
-						
 						alt={post.title}
 					/>
 				</div>
@@ -99,7 +88,6 @@ const PostDetails = () => {
 					<Typography gutterBottom variant="h5">
 						You might also like:
 					</Typography>
-					<Divider />
 					<div className={classes.recommendedPosts}>
 						{recommendedPosts.map(
 							({
@@ -112,8 +100,12 @@ const PostDetails = () => {
 							}) => (
 								<div
 									style={{
-										margin: "20px",
+										padding: "0 30px",
 										cursor: "pointer",
+										borderLeft:
+											"1px solid rgba(0, 0, 0, 0.23)",
+										borderRight:
+											"1px solid rgba(0, 0, 0, 0.23)",
 									}}
 									onClick={() => openPost(_id)}
 									key={_id}
@@ -139,7 +131,16 @@ const PostDetails = () => {
 									>
 										Likes: {likes.length}
 									</Typography>
-									<img src={selectedFile} width="200px" />
+									<img
+										alt="Post"
+										src={selectedFile}
+										width="250px"
+										height="140px"
+										style={{
+											objectFit: "cover",
+											borderRadius: "5px",
+										}}
+									/>
 								</div>
 							)
 						)}

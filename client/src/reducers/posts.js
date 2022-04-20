@@ -7,12 +7,13 @@ import {
 	END_LOADING,
 	FETCH_BY_SEARCH,
 	FETCH_POST,
+	COMMENT,
 } from "../constants/actionTypes";
 export default (state = { isLoading: true, posts: [] }, action) => {
 	switch (action.type) {
 		case START_LOADING:
 			return { ...state, isLoading: true };
-			
+
 		case END_LOADING:
 			return { ...state, isLoading: false };
 
@@ -25,7 +26,15 @@ export default (state = { isLoading: true, posts: [] }, action) => {
 			};
 		case CREATE:
 			return { ...state, posts: [...state, action.payload] };
+		case COMMENT:
+			return {
+				...state,
+				posts: state.posts.map((post) => {
+					if (post._id === action.payload._id) return action.payload;
 
+					return post;
+				}),
+			};
 		case UPDATE:
 			return {
 				...state,

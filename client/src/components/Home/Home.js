@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
 	Container,
 	Grid,
@@ -15,7 +15,7 @@ import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import Paginate from "../Pagination";
 import { useDispatch } from "react-redux";
-import { getPosts, getPostBySearch } from "../../actions/posts";
+import { getPostBySearch } from "../../actions/posts";
 
 import makeStyles from "./styles";
 

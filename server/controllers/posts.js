@@ -29,7 +29,7 @@ export const getPost = async (req, res) => {
 	const { id } = req.params;
 	try {
 		const post = await PostMessage.findById(id);
-		
+
 		res.status(200).json(post);
 	} catch (error) {
 		res.status(404).json({ message: error.message });
@@ -108,4 +108,19 @@ export const likePost = async (req, res) => {
 		new: true,
 	});
 	res.status(200).json(updatedPost);
+};
+
+export const commentPost = async (req, res) => {
+	const { id } = req.params;
+	const { value } = req.body;
+
+	console.log(req.body);
+
+	const post = await PostMessage.findById(id);
+	console.log(post);
+	post.comments.push(value);
+	const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+		new: true,
+	});
+	res.json(updatedPost);
 };
